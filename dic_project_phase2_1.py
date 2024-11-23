@@ -339,6 +339,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score, roc_curve, auc
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 
 # Load your dataset
 data = pd.read_csv(url)
@@ -357,7 +358,7 @@ X_training, X_testing, y_training, y_testing = train_test_split(X, Y, test_size=
 # Linear Regression model
 linear_reg = LinearRegression()
 linear_reg.fit(X_training, y_training)
-y_pred = lin_reg.predict(X_testing)
+y_pred = linear_reg.predict(X_testing)
 
 # Visualization
 plt.scatter(X_testing['Item_Outlet_Sales'], y_testing, color='blue')
