@@ -468,7 +468,7 @@ plt.figure(figsize=(12, 8))
 plot_tree(decision_tree_model, feature_names=['Item_Visibility'], filled=True)
 plt.title('Decision Tree for Item MRP Prediction')
 plt.show()
-y_pred_tree = decision_tree_model.predict(X_test_tree)
+y_pred_tree = decision_tree_model.predict(X_testing_tree)
 
 # Scatter plot of predicted vs actual values
 plt.scatter(y_testing_tree, y_pred_tree)
