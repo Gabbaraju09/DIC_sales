@@ -461,7 +461,7 @@ X_training_tree, X_testing_tree, y_training_tree, y_testing_tree = train_test_sp
 
 # Decision Tree Regressor model
 decision_tree_model = DecisionTreeRegressor(max_depth=3, random_state=42)
-decision_tree_model.fit(X_train_tree, y_train_tree)
+decision_tree_model.fit(X_training_tree, y_training_tree)
 
 # Visualization
 plt.figure(figsize=(12, 8))
