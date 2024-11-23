@@ -12,7 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime as dt
 
-url = "/Users/mymac/Downloads/Big Sales Data (1).csv"
+url = "DIC_sales/Big Sales Data (1).csv"
 data = pd.read_csv(url)
 data.head()
 print(data)
