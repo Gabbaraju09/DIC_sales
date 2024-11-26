@@ -169,58 +169,86 @@ if uploaded_file:
 
     elif model_choice == "Decision Tree Regression":
         st.write("### Decision Tree Regression")
-        #target = st.sidebar.selectbox("Target Variable", data.columns)
-        features = st.sidebar.multiselect("Feature Variables", data.columns)
+        target = st.sidebar.selectbox("Target Variable", data.columns, key="dt_target")
+        features = st.sidebar.multiselect("Feature Variables", data.columns, key="dt_features")
 
         if target and features:
-            X = data[features]
-            y = data[target]
+            numeric_columns = data[features].select_dtypes(include=[np.number]).columns
+            if len(numeric_columns) == 0:
+                st.error("No numeric features selected. Please select valid numeric columns.")
+            else:
+                X = data[numeric_columns]
+                y = data[target]
 
-            # Split data
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                # Split data
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # Train the model
-            dt_model = DecisionTreeRegressor(random_state=42)
-            dt_model.fit(X_train, y_train)
+                # Train the model
+                dt_model = DecisionTreeRegressor(random_state=42)
+                dt_model.fit(X_train, y_train)
 
-            # Predictions
-            y_pred = dt_model.predict(X_test)
+                # Predictions
+                y_pred = dt_model.predict(X_test)
+    
+                # Display performance metrics
+                st.write("#### Model Performance")
+                st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
+                st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
 
-            # Display performance metrics
-            st.write("#### Model Performance")
-            st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
-            st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
+                # Visualization
+                fig, ax = plt.subplots(figsize=(8, 5))
+                ax.scatter(y_test, y_pred, alpha=0.7)
+                ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)
+                ax.set_xlabel("Actual")
+                ax.set_ylabel("Predicted")
+                st.pyplot(fig)
+        else:
+            st.warning("Please select both a target variable and at least one feature variable.")
 
-            # Visualization
-            fig, ax = plt.subplots(figsize=(8, 5))
-            ax.scatter(y_test, y_pred, alpha=0.7)
-            ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)
-            ax.set_xlabel("Actual")
-            ax.set_ylabel("Predicted")
-            st.pyplot(fig)
-
+    # Similar validation for SVM Regression
     elif model_choice == "SVM Regression":
         st.write("### Support Vector Machine Regression")
-        #target = st.sidebar.selectbox("Target Variable", data.columns)
-        features = st.sidebar.multiselect("Feature Variables", data.columns)
+        target = st.sidebar.selectbox("Target Variable", data.columns, key="svm_target")
+        features = st.sidebar.multiselect("Feature Variables", data.columns, key="svm_features")
 
         if target and features:
-            X = data[features]
-            y = data[target]
+            numeric_columns = data[features].select_dtypes(include=[np.number]).columns
+            if len(numeric_columns) == 0:
+                st.error("No numeric features selected. Please select valid numeric columns.")
+            else:
+                X = data[numeric_columns]
+                y = data[target]
 
-            # Split data
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                # Split data
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # Train the model
-            svm_model = SVR(kernel="rbf")
-            svm_model.fit(X_train, y_train)
+                # Train the model
+                svm_model = SVR(kernel="rbf")
+                svm_model.fit(X_train, y_train)
 
-            # Predictions
-            y_pred = svm_model.predict(X_test)
+                # Predictions
+                y_pred = svm_model.predict(X_test)
 
-            # Display performance metrics
-            st.write("#### Model Performance")
-            st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
-            st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
+                # Display performance metrics
+                st.write("#### Model Performance")
+                st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
+                st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
+
+                # Visualization
+                fig, ax = plt.subplots(figsize=(8, 5))
+                ax.scatter(y_test, y_pred, alpha=0.7)
+                ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)
+                ax.set_xlabel("Actual")
+                ax.set_ylabel("Predicted")
+                st.pyplot(fig)
+        else:
+            st.warning("Please select both a target variable and at least one feature variable.")
+
+
+
+
+
+
+
 
             # Visualization
