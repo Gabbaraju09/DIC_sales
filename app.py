@@ -188,10 +188,11 @@ if uploaded_file:
             sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=data["Cluster"], palette="viridis", ax=ax)
             ax.set_title("K-Means Clustering")
             st.pyplot(fig)
+            
     elif model_choice == "Decision Tree Regression":
-    st.write("### Decision Tree Regression")
-    target = st.sidebar.selectbox("Target Variable", data.columns)
-    features = st.sidebar.multiselect("Feature Variables", data.columns)
+        st.write("### Decision Tree Regression")
+        target = st.sidebar.selectbox("Target Variable", data.columns)
+        features = st.sidebar.multiselect("Feature Variables", data.columns)
 
         if target and features:
             X = data[features]
