@@ -169,7 +169,7 @@ if uploaded_file:
 
     elif model_choice == "Decision Tree Regression":
         st.write("### Decision Tree Regression")
-        target = st.sidebar.selectbox("Target Variable", data.columns)
+        #target = st.sidebar.selectbox("Target Variable", data.columns)
         features = st.sidebar.multiselect("Feature Variables", data.columns)
 
         if target and features:
@@ -201,7 +201,7 @@ if uploaded_file:
 
     elif model_choice == "SVM Regression":
         st.write("### Support Vector Machine Regression")
-        target = st.sidebar.selectbox("Target Variable", data.columns)
+        #target = st.sidebar.selectbox("Target Variable", data.columns)
         features = st.sidebar.multiselect("Feature Variables", data.columns)
 
         if target and features:
