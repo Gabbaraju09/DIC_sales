@@ -255,8 +255,8 @@ if uploaded_file:
             ax.set_ylabel("Predicted")
             st.pyplot(fig)
 
-else:
-    st.write("Please select a machine learning model from the sidebar.")
+    else:
+        st.write("Please select a machine learning model from the sidebar.")
 
 else:
     st.title("Welcome to the Data Product Demo")
