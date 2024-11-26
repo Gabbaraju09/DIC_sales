@@ -188,6 +188,74 @@ if uploaded_file:
             sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=data["Cluster"], palette="viridis", ax=ax)
             ax.set_title("K-Means Clustering")
             st.pyplot(fig)
+    elif model_choice == "Decision Tree Regression":
+    st.write("### Decision Tree Regression")
+    target = st.sidebar.selectbox("Target Variable", data.columns)
+    features = st.sidebar.multiselect("Feature Variables", data.columns)
+
+        if target and features:
+            X = data[features]
+            y = data[target]
+
+            # Split data
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+            # Train the model
+            from sklearn.tree import DecisionTreeRegressor
+            dt_model = DecisionTreeRegressor(random_state=42)
+            dt_model.fit(X_train, y_train)
+
+            # Predictions
+            y_pred = dt_model.predict(X_test)
+
+            # Display performance metrics
+            st.write("#### Model Performance")
+            st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
+            st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
+
+            # Visualization
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.scatter(y_test, y_pred, alpha=0.7)
+            ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)
+            ax.set_xlabel("Actual")
+            ax.set_ylabel("Predicted")
+            st.pyplot(fig)
+
+    elif model_choice == "SVM Regression":
+        st.write("### Support Vector Machine Regression")
+        target = st.sidebar.selectbox("Target Variable", data.columns)
+        features = st.sidebar.multiselect("Feature Variables", data.columns)
+
+        if target and features:
+            X = data[features]
+            y = data[target]
+
+            # Split data
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+            # Train the model
+            from sklearn.svm import SVR
+            svm_model = SVR(kernel="rbf")
+            svm_model.fit(X_train, y_train)
+
+            # Predictions
+            y_pred = svm_model.predict(X_test)
+
+            # Display performance metrics
+            st.write("#### Model Performance")
+            st.write(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.2f}")
+            st.write(f"R² Score: {r2_score(y_test, y_pred):.2f}")
+
+            # Visualization
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.scatter(y_test, y_pred, alpha=0.7)
+            ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)
+            ax.set_xlabel("Actual")
+            ax.set_ylabel("Predicted")
+            st.pyplot(fig)
+
+else:
+    st.write("Please select a ma
 
 else:
     st.title("Welcome to the Data Product Demo")
