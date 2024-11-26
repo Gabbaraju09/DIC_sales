@@ -15,7 +15,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVR
 
 # Page configuration
-st.set_page_config(page_title="Data Cleaning Demo", layout="wide")
+st.set_page_config(page_title="Web Interface Demo", layout="wide")
 
 # Function to load data
 @st.cache
@@ -24,7 +24,7 @@ def load_data(file):
     return data
 
 # Sidebar for file upload
-st.sidebar.title("Upload Dataset")
+st.sidebar.title("Upload a Dataset")
 uploaded_file = st.sidebar.file_uploader("Upload a CSV file", type="csv")
 
 if uploaded_file:
@@ -51,14 +51,14 @@ if uploaded_file:
         st.success("Missing values in numeric columns filled with their mean.")
 
     # Remove duplicate rows
-    st.sidebar.subheader("Remove Duplicates")
-    remove_duplicates = st.sidebar.checkbox("Remove Duplicates")
+    st.sidebar.subheader("Removing Duplicates")
+    remove_duplicates = st.sidebar.checkbox("Removing Duplicates")
     if remove_duplicates:
         data.drop_duplicates(inplace=True)
-        st.success("Duplicate rows removed.")
+        st.success("Duplicate rows removed")
 
     # **Outlier Detection**
-    st.sidebar.subheader("Outlier Detection and Capping")
+    st.sidebar.subheader("Outlier Detection")
     detect_outliers = st.sidebar.checkbox("Detect and Cap Outliers")
     if detect_outliers:
         numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns
@@ -92,8 +92,8 @@ if uploaded_file:
         st.write(f"Total Rows: {data.shape[0]}, Total Columns: {data.shape[1]}")
 
     # **Download Cleaned Data**
-    st.sidebar.subheader("Download Cleaned Data")
-    download_button = st.sidebar.button("Download Cleaned Data as CSV")
+    st.sidebar.subheader("Download Cleaned Dataset")
+    download_button = st.sidebar.button("Download Cleaned Dataset as CSV")
     if download_button:
         st.download_button(
             label="Download CSV",
@@ -103,8 +103,8 @@ if uploaded_file:
         )
 
     # EDA Options
-    st.sidebar.subheader("Exploratory Data Analysis")
-    if st.sidebar.checkbox("Show Summary Statistics"):
+    st.sidebar.subheader("Exploratory Data Analysis(EDA)")
+    if st.sidebar.checkbox("Summary Statistics"):
         st.write("### Summary Statistics")
         st.write(data.describe())
 
@@ -120,7 +120,7 @@ if uploaded_file:
     st.sidebar.subheader("Machine Learning Models")
     model_choice = st.sidebar.selectbox("Choose a model", 
                                         ["None", "Linear Regression", "K-Means Clustering", 
-                                         "Decision Tree Regression", "SVM Regression"])
+                                         "Decision Tree", "SVM Regression"])
 
     if model_choice == "Linear Regression":
         st.write("### Linear Regression")
@@ -203,7 +203,7 @@ if uploaded_file:
                 ax.set_ylabel("Predicted")
                 st.pyplot(fig)
         else:
-            st.warning("Please select both a target variable and at least one feature variable.")
+            st.warning("Please select both target variable and feature variable.")
 
     # Similar validation for SVM Regression
     elif model_choice == "SVM Regression":
@@ -242,7 +242,7 @@ if uploaded_file:
                 ax.set_ylabel("Predicted")
                 st.pyplot(fig)
         else:
-            st.warning("Please select both a target variable and at least one feature variable.")
+            st.warning("Please select both target variable and feature variable.")
 
 
 
